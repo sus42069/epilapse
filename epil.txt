@@ -1,0 +1,1035 @@
+var cx = 300;
+var cy = 300;
+var up = false;
+var down = false;
+var left = false;
+var right = false;
+var r1;
+var r2;
+var r3;
+var tx = [];
+var ty = [];
+var tc1 = [];
+var tc2 = [];
+var tc3 = [];
+var hi = [];
+var time = 0;
+var reg = 0;
+var age = [];
+var wave = 0;
+var e = 0;
+var ax = [];
+var ay = [];
+var timer = 0;
+var atime = 0;
+var ag = [];
+var dead = false;
+var score = 0;
+var px = random(0,600);
+var py = random(0,600);
+var screen = 0;
+var c1 = 0;
+var c2 = 0;
+var c3 = 0;
+var cm = 0;
+var cmode = 0;
+var ox = [];
+var oy = [];
+var oxs = [];
+var oys = [];
+var os = [];
+var coin = 900;
+var maxh = 100;
+var maxhtb = 0;
+var coing = 1;
+var coingtb = 0;
+var recharge = 0;
+var health = maxh; 
+var bc = 0;
+var bctb = 0;
+var block = false;
+var btime = 0;
+var brecharge = 0;
+var blockmax = "";
+var blockm = false;
+var ab = 0;
+var abtb = 0;
+var abmax = "";
+var abm = false;
+var ch = 0;
+var chtb = 0;
+var dc = 0;
+var dctb = 0;
+var dcmax = "";
+var dcm = false;
+var dodge = false;
+var dreacharge = 0;
+var a2x = [];
+var a2y = [];
+var a2g = [];
+var a2b = 0;
+var a2time = 0;
+var ttime = 0;
+var changing = false;
+var scx = 0;
+var scy = 0;
+var atime2 = 0;
+var as = [];
+var shrink = [];
+var booms = [];
+
+textAlign(CENTER,CENTER);
+
+var change = function (want) {
+    
+    fill(0, 21, 255);
+    ttime+=30;
+    
+    ellipse(300,300,ttime,ttime);
+    
+    if (ttime>800) {
+        
+        screen = want;
+        
+        changing = false;
+        
+    }
+    
+};
+
+var prog = function () {
+    
+    println("placeholder");
+    
+};
+
+var rs = function () {
+    
+    brecharge = 0;
+    block = false;
+    btime = 0;
+    score = 0;
+    dead = false;
+    time = 0;
+    timer = 0;
+    atime = 0;
+    a2time = 0;
+    time = 0;
+    reg = 0;
+    wave = 0;
+    e = 0;
+    ag = [];
+    ax = [];
+    ay = [];
+    as = [];
+    a2g = [];
+    a2x = [];
+    a2y = [];
+    cx = 300;
+    cy = 300;
+    age = [];
+    tx = [];
+    ty = [];
+    tc1 = [];
+    tc2 = [];
+    tc3 = [];
+    up = false;
+    down = false;
+    left = false;
+    right = false;
+    px = random(0,600);
+    py = random(0,600);
+    health = maxh;
+    
+};//reset main varriables for classic mode
+
+var cool = function () {
+    
+    if (cmode === 0) {
+            
+            c1+=5;
+            
+            if (c1 === 255) {
+                
+                cmode = 1;
+                
+            }
+            
+        }
+    if (cmode === 1) {
+            
+            c2+=5;
+            c1-=5;
+            
+            if (c1 ===0 && c2 === 255) {
+                
+                cmode = 2;
+                
+            }
+            
+        }
+    if (cmode === 2) {
+            
+            c3+=5;
+            c2-=5;
+            
+            if (c2 ===0 && c3 === 255) {
+                
+                cmode = 3;
+                
+            }
+            
+        }
+    if (cmode === 3) {
+            
+            c1+=5;
+            c3-=5;
+            
+            if (c3 ===0 && c1 === 255) {
+                
+                cmode = 1;
+                
+            }
+            
+        }
+    
+};
+
+var rings = function () {
+    
+    timer++;
+    
+    if (timer ===  100) {
+        
+        timer = 0;
+        
+        ox[ox.length] = random(0,600);
+        oy[ox.length] = random(0,600);
+        oxs[ox.length] = random(-30,30);
+        oys[ox.length] = random(-30,30);
+        os[ox.length] = random(5,60);
+        
+        }
+    for (var q = 0; q < ox.length; q++) {
+            
+            ellipse(ox[q],oy[q],os[q],os[q]);
+            
+            ox[q] += oxs[q];
+            oy[q] += oys[q];
+            
+            oxs[q] += (300-ox[q])/100;
+            oys[q] += (300-oy[q])/100;
+            
+        }
+    
+};//these are the rings for the main menu
+
+var attack1 = function () {
+    
+    if (atime2 > 1000 / round(timer/3000)) {
+        
+        scx = random(0,600);
+        scy = random(0,600);
+        
+        for (var lem = 0;lem<10;lem++) {
+            
+            if (ab <= random(0,100)) {
+                
+                ax[ax.length] = scx + random(-30,30);
+                ay[ay.length] = scy + random(-30,30);
+                ag[ag.length] = 140 + random(-35,35);
+                shrink[shrink.length] = 1;
+                as[as.length] = 0.5;
+                booms[ax.length] = 1;
+                
+            }
+            
+        }
+        
+        atime2 = 0;
+        
+    }//timing for the attacks
+    
+    
+    for (var n = 0; n < ax.length; n++) {
+            
+            if (ag[n] < 350) {
+            if (ag[n] <  200) {
+                
+                strokeWeight(7.5);
+                ellipse(ax[n],ay[n],200-ag[n],200-ag[n]);
+                
+                ag[n]+=shrink[n];
+                
+            }
+            
+            if (ag[n] >= 199 && ag[n] < 320) {
+                
+                ag[n]+=6*booms[n];
+                strokeWeight((((320-ag[n])/4)+7.5)*as[n]);
+                ellipse(ax[n],ay[n],(ag[n]-200)*as[n],(ag[n]-200)*as[n]);
+                
+                if (dist(cx,cy,ax[n],ay[n]) < (ag[n]-220)*as[n]) {
+                    
+                    if (brecharge < 0) {
+                        
+                        brecharge=500;
+                        
+                        if (bc >= random(0,100) && block === false) {
+                            
+                            block = true;
+                            btime = 200;
+                            
+                        } 
+                        
+                    }
+                    
+                    if (dreacharge < 0 && block === false) {
+                        
+                        dreacharge = 500;
+                        
+                        if (dc >= random(0,100) && block === false) {
+                            
+                            dodge = true;
+                            
+                        }
+                        
+                    }
+                    
+                    if (block === false && dodge === false) {
+                        
+                        health-=5;
+                        
+                    }
+                    
+                    
+                }
+                
+            }
+        }
+            
+    }//attack loop
+    
+};//attack function
+
+var attack2 = function () {
+    
+    if (a2time > 1500 / round(timer/3500)) {
+        
+        if (a2b <= random(0,100)) {
+            
+            a2x[a2x.length] = random(0,600);
+            a2y[a2y.length] = random(0,600);
+            a2g[a2g.length] = 0;
+            
+        }
+        
+        a2time = 0;
+        
+    }//timing for the attacks
+    
+    for (var n = 0; n < a2x.length; n++) {
+        
+        if (a2g[n] < 600) {
+            
+            if (a2g[n] <  200) {
+                
+                strokeWeight(7.5);
+                ellipse(a2x[n],a2y[n],150-(a2g[n]*0.75),250-(a2g[n]*1.25));
+                ellipse(a2x[n],a2y[n],250-(a2g[n]*1.25),150-(a2g[n]*0.75));
+                
+                a2g[n]+=0.5;
+                
+            }//this is the age of the thing and this is the ellipse that gets smaller
+            
+            if (a2g[n] >= 199 && a2g[n] < 600) {
+                
+                a2g[n]+=7;
+                strokeWeight(((600-a2g[n])/4));
+                ellipse(a2x[n],a2y[n],a2g[n]-199,a2g[n]-199);
+                
+                if (dist(cx,cy,a2x[n],a2y[n]) < (a2g[n]-400)) {
+                    
+                    if (brecharge < 0) {
+                        
+                        brecharge=500;
+                        
+                        if (bc >= random(0,100) && block === false) {
+                            
+                            block = true;
+                            btime = 200;
+                            
+                        } 
+                        
+                    }
+                    
+                    if (dreacharge < 0 && block === false) {
+                        
+                        dreacharge = 500;
+                        
+                        if (dc >= random(0,100) && block === false) {
+                            
+                            dodge = true;
+                            
+                        }
+                        
+                    }
+                    
+                    if (block === false && dodge === false) {
+                        
+                        health-=5;
+                        
+                    }
+                    
+                    
+                }
+                
+            }
+        }
+            
+    }//attack loop
+    
+};//attack2 function
+
+/*
+var attack = function (atacktime,atx,aty) {
+    
+    if (atime > 500 / round(timer/600)) {
+        
+        if (ab <= random(0,100)) {
+            
+            ax[ax.length] = random(0,600);
+            ay[ay.length] = random(0,600);
+            ag[ag.length] = 0;
+            
+        }
+        
+        atime = 0;
+        
+    }//timing for the attacks
+    
+    for (var n = 0; n < ax.length; n++) {
+            
+            if (ag[n] < 350) {
+            if (ag[n] <  200) {
+                
+                strokeWeight(7.5);
+                ellipse(ax[n],ay[n],200-ag[n],200-ag[n]);
+                
+                ag[n]++;
+                
+            }
+            
+            if (ag[n] >= 199 && ag[n] < 320) {
+                
+                ag[n]+=6;
+                strokeWeight(((320-ag[n])/4)+7.5);
+                ellipse(ax[n],ay[n],ag[n]-200,ag[n]-200);
+                
+                if (dist(cx,cy,ax[n],ay[n]) < ag[n]-220) {
+                    
+                    if (brecharge < 0) {
+                        
+                        brecharge=500;
+                        
+                        if (bc >= random(0,100) && block === false) {
+                            
+                            block = true;
+                            btime = 200;
+                            
+                        } 
+                        
+                    }
+                    
+                    if (dreacharge < 0 && block === false) {
+                        
+                        dreacharge = 500;
+                        
+                        if (dc >= random(0,100) && block === false) {
+                            
+                            dodge = true;
+                            
+                        }
+                        
+                    }
+                    
+                    if (block === false && dodge === false) {
+                        
+                        health-=5;
+                        
+                    }
+                    
+                }
+                
+            }
+            
+        }
+            
+    }//attack loop
+    
+    
+};// A diverse attack function
+*/
+
+var sr = function (thing,deg) {
+    
+    thing*=deg;
+    
+    thing = round(thing);
+    
+    thing/=deg;
+    
+    return thing;
+    
+};
+
+var draw = function() {
+    
+    if (screen === 0) {
+        
+        background(0, 0, 0);
+        fill(c1,c2,c3);
+        ellipse(300,300,150,160);
+        
+        fill(0, 0, 0);
+        textSize(50);
+        text("Start",300,300);
+        textSize(80);
+        fill(c1,c2,c3);
+        text("Epillapse",300,50);
+        
+        noFill();
+        stroke(c1,c2,c3);
+        strokeWeight(10);
+        
+        cool();
+        rings();
+        
+        if (changing === true) {
+            
+            change(2);
+            
+        }
+        if (mouseIsPressed && dist(mouseX,mouseY,300,300) < 75) {
+            
+            changing = true; 
+            
+        }
+        
+    }//main menu
+    
+    if (screen === 1) {
+        
+        background(0, 0, 0);
+        
+        r1 = random(0,255);
+        r2 = random(0,255);
+        r3 = random(0,255);
+        if (time === 5) {
+        
+        tx[tx.length] = cx;
+        ty[ty.length] = cy;
+        tc1[tc1.length] = r1;
+        tc2[tc2.length] = r2;
+        tc3[tc3.length] = r3;
+        hi[hi.length] = 0;
+        age[age.length] = 0;
+        
+        tx[reg] = cx;
+        ty[reg] = cy;
+        tc1[reg] = r1;
+        tc2[reg] = r2;
+        tc3[reg] = r3;
+        hi[reg] = 0;
+        reg++;
+        
+        time=0;
+        
+    }//these create the charactor trail
+        
+        if (atime > 600 / round(timer/600)) {
+        
+        if (ab <= random(0,100)) {
+            
+            ax[ax.length] = random(0,600);
+            ay[ay.length] = random(0,600);
+            ag[ag.length] = 0;
+            as[as.length] = 1;
+            shrink[ax.length] = 1;
+            booms[ax.length] = 1;
+            
+        }
+        
+        atime = 0;
+        
+    }//timing for the attacks
+        
+        noFill();
+        strokeWeight(10);
+        
+        for (var i = 0; i < tx.length; i++) {
+        
+        if (age[i]<150) {
+            
+            strokeWeight(age[i]/15);
+            stroke(tc1[i]-(age[i]*2),tc2[i]-(age[i]*2),tc3[i]-(age[i]*2));
+            ellipse(tx[i],ty[i],hi[i],hi[i]);
+            hi[i]++;
+            age[i]++;
+        }
+        
+    }// trail loop
+        
+        attack1();
+        attack2();
+        
+        noStroke();
+        
+        if (dist(cx,cy,px,py) < 17.5) {
+            
+            score++;
+            
+            if (health<maxh) {
+                
+                health += ch;
+                
+            }
+            px = random(100,500);
+            py = random(100,500);
+            
+        }
+        
+        dreacharge--;
+        brecharge--;
+        btime--;
+        
+        if (dodge === true) {
+            
+            dodge = false;
+            
+            cx = random(0,600);
+            cy = random(0,600);
+            
+        }
+        
+        if (btime < 1) {
+            
+            block = false;
+            
+        }
+        
+        fill(255, 255, 0);
+        ellipse(px,py,15,15);
+        
+        fill(r1,r2,r3);
+        ellipse(cx,cy,20,20);
+        if (block === true) {
+            
+            noFill();
+            stroke(r1,r2,r3);
+            ellipse(cx,cy,30,30);
+            
+        }
+        
+        if (keyIsPressed&&keyCode === UP) {
+        up = true;
+        down = false;
+        left = false;
+        right = false;
+    }
+        if (keyIsPressed&&keyCode === DOWN) {
+        up = false;
+        down = true;
+        left = false;
+        right = false;
+    }
+        if (keyIsPressed&&keyCode === LEFT) {
+        up = false;
+        down = false;
+        left = true;
+        right = false;
+    }
+        if (keyIsPressed&&keyCode === RIGHT) {
+        up = false;
+        down = false;
+        left = false;
+        right = true;
+    }
+        
+        if (right && dead === false) {
+        cx+=5;
+    }
+        if (left && dead === false) {
+        cx-=5;
+    }
+        if (up && dead === false) {
+        cy-=5;
+    }
+        if (down && dead === false) {
+        cy+=5;
+    }
+        
+        if (cy>600) {
+        cy=0;
+    }
+        if (cy<0) {
+        cy=600;
+    }
+        if (cx>600) {
+        cx=0;
+    }
+        if (cx<0) {
+        cx=600;
+    }
+        
+        if (health < 1) {
+            
+            dead = true;
+            
+        }
+        
+        fill(255, 255, 255);
+        textSize(30);
+        text("Time: " + timer + " Score: " + round((score * (timer/2000))*coing) + " Health: " + health,300,30);
+        
+        if (dead === true) {
+        
+        text("You dead",300,300);
+        text("click to continue",300,350);
+        
+        change(2);
+        coin+=round((score * (timer/2000))*coing);
+        
+        
+    }
+        if (dead === false) {
+        
+        timer++;
+        
+    }
+        wave+=3;
+        time++;
+        atime++;
+        atime2++;
+        a2time++;
+        
+    }//classic mode
+        
+    if (screen === 2) {
+        
+        background(0, 0, 0);
+        
+        cool();
+        noFill();
+        textSize(30);
+        
+        stroke(c1,c2,c3);
+        ellipse(150,150,200,200);
+        fill(c1,c2,c3);
+        text("Classic",150,150);
+        text("Coins: " + coin,300,300);
+        
+        if (mouseIsPressed && dist(mouseX,mouseY,150,150) < 100) {
+            
+            rs();
+            screen = 1;
+            
+        }
+        
+        noFill();
+        strokeWeight(10);
+        stroke(c1,c2,c3);
+        ellipse(450,150,200,200);
+        fill(c1,c2,c3);
+        text("Upgrades",450,150);
+        
+        if (mouseIsPressed && dist(mouseX,mouseY,450,150) < 100) {
+            
+            screen = 3;
+            
+        }
+        
+        noFill();
+        stroke(c1,c2,c3);
+        ellipse(150,450,200,200);
+        fill(c1,c2,c3);
+        text("Boss select",150,450);
+        
+        if (mouseIsPressed && dist(mouseX,mouseY,150,450) < 100) {
+            
+            screen = 4;
+            
+        }
+        
+        noFill();
+        stroke(c1,c2,c3);
+        ellipse(450,450,200,200);
+        fill(c1,c2,c3);
+        text("Save",450,450);
+        
+        if (mouseIsPressed && dist(mouseX,mouseY,450,450) < 100) {
+            
+            screen = 5;
+            
+        }
+        
+    }//second menu
+    
+    if (screen === 3) {
+        
+        background(0, 0, 0);
+        cool();
+        noFill();
+        stroke(c1,c2,c3);
+        ellipse(300,500,150,150);
+        
+        if (dist(mouseX,mouseY,300,100) < 62.5) {
+            
+            textSize(15);
+            text("Increases max health",300,50);
+            text("current max health: " + maxh,300,75);
+            text("+ 25 health",300,100);
+            text("Times bought: " + maxhtb,300,125);
+            text("Cost: " + 100*((maxhtb+1)/4),300,150);
+            
+            if (recharge > 30 && mouseIsPressed && coin >= 100*((maxhtb+1)/4)) {
+                
+                coin-=100*((maxhtb+1)/4);
+                maxh+=25;
+                maxhtb+=1;
+                recharge = 0;
+                
+            }
+            
+        } else {
+            
+            textSize(30);
+            noFill();
+            stroke(c1,c2,c3);
+            ellipse(300,100,125,125);
+            fill(c1,c2,c3);
+            text("Health",300,100);
+            
+        }//health
+        
+        if (dist(mouseX,mouseY,300,300) < 62.5) {
+            
+            textSize(15);
+            text("Increases coin gain multiplier",300,250);
+            text("current coin gain multiplier: " + sr(coing,10),300,275);
+            text("+ 0.1 coin gain multiolier",300,300);
+            text("Times bought: " + coingtb,300,325);
+            text("Cost: " + round(100*((coingtb+1)*2)),300,350);
+            
+            
+            if (recharge > 30 && mouseIsPressed && coin >= round(100*((coingtb+1)*2))) {
+                
+                coin-=round(100*((coingtb+1)*2));
+                coing+=0.1;
+                coingtb+=1;
+                recharge = 0;
+                
+            }
+            
+        } else {
+            
+            textSize(30);
+            noFill();
+            stroke(c1,c2,c3);
+            ellipse(300,300,125,125);
+            fill(c1,c2,c3);
+            text("Coin",300,300);
+            
+        }// coin
+       
+        if (dist(mouseX,mouseY,100,100) < 62.5) {
+            
+            textSize(15);
+            text("Better chance of getting a sheild",100,50);
+            text("current defence: " + bc,100,75);
+            text("+ 1% block chance",100,100);
+            text("Times bought: " + bctb + blockmax,100,125);
+            text("Cost: " + round(100*((bctb+1))),100,150);
+            
+            if (bctb > 50) {
+                
+                blockmax = " Max";
+                blockm = true;
+                
+            }
+            
+            if (recharge > 30 && mouseIsPressed && coin >= round(100*((bctb+1))) && blockm === false) {
+                
+                coin-=round(100*((bctb+1)));
+                bc+=1;
+                bctb+=1;
+                recharge = 0;
+                
+            }
+            
+        } else {
+            
+            textSize(30);
+            noFill();
+            stroke(c1,c2,c3);
+            ellipse(100,100,125,125);
+            fill(c1,c2,c3);
+            text("Defence",100,100);
+            
+        }//block
+        
+        if (dist(mouseX,mouseY,100,300) < 62.5) {
+            
+            textSize(15);
+            text("deacreas # of attacks",100,250);
+            text("% of attacks cancled: " + ab,100,275);
+            text("-1% attacks",100,300);
+            text("Times bought: " + abtb + abmax,100,325);
+            text("Cost: " + round(100*((abtb+1))*3),100,350);
+            
+            if (abtb > 50) {
+                
+                abmax = " Max";
+                abm = true;
+                
+            }
+            
+            if (recharge > 30 && mouseIsPressed && coin >= round(100*((abtb+1))) && abm === false) {
+                
+                coin-=round(100*((abtb+1))*3);
+                ab+=1;
+                abtb+=1;
+                recharge = 0;
+                
+            }
+            
+        } else {
+            
+            textSize(30);
+            noFill();
+            stroke(c1,c2,c3);
+            ellipse(100,300,125,125);
+            fill(c1,c2,c3);
+            text("Attacks",100,300);
+            
+        }//attacks
+        
+        if (dist(mouseX,mouseY,500,100) < 62.5) {
+            
+            textSize(15);
+            text("chance to teleport to not be hit",500,50);
+            text("dodge % chance: " + dc,500,75);
+            text("+ 1% dodge chance",500,100);
+            text("Times bought: " + dctb + dcmax,500,125);
+            text("Cost: " + round(100*((dctb+1))),500,150);
+            
+            if (recharge > 30 && mouseIsPressed && coin >= round(100*((dctb+1))) && dcm === false) {
+                
+                if (dctb > 50) {
+                    
+                    dcmax = " max";
+                    dcm = true;
+                    
+                }
+                
+                coin-=round(100*((dctb+1)));
+                dc+=1;
+                dctb+=1;
+                recharge = 0;
+                
+            }
+            
+        } else {
+            
+            textSize(30);
+            noFill();
+            stroke(c1,c2,c3);
+            ellipse(500,100,125,125);
+            fill(c1,c2,c3);
+            text("Dodge",500,100);
+            
+        }//dodge
+        
+        if (dist(mouseX,mouseY,500,300) < 62.5) {
+            
+            textSize(15);
+            text("gives health for coins",500,250);
+            text("health per coin: " + ch,500,275);
+            text("+ 2 health per coin",500,300);
+            text("Times bought: " + chtb,500,325);
+            text("Cost: " + round(200*((chtb+1))*2),500,350);
+            
+            if (recharge > 30 && mouseIsPressed && coin >= round(200*((chtb+1))*2)) {
+                
+                coin-=round(200*((chtb+1))*2);
+                ch+=2;
+                chtb+=1;
+                recharge = 0;
+                
+            }
+            
+        } else {
+            
+            textSize(30);
+            noFill();
+            stroke(c1,c2,c3);
+            ellipse(500,300,125,125);
+            fill(c1,c2,c3);
+            text("Healing",500,300);
+            
+        }//healing
+        
+        recharge++;
+        
+        textSize(30);
+        fill(c1,c2,c3);
+        text("back",300,500);
+        text("Coins: " + coin,75,575);
+        
+        if (mouseIsPressed && dist(mouseX,mouseY,300,500) < 75) {
+            
+            screen = 2;
+            
+        }
+        
+    }//upgrades
+    
+    if (screen === 4) {
+        
+        background(0, 0, 0);
+        cool();
+        noFill();
+        stroke(c1,c2,c3);
+        ellipse(300,500,150,150);
+        
+        fill(c1,c2,c3);
+        text("back",300,500);
+        
+        if (mouseIsPressed && dist(mouseX,mouseY,300,500) < 75) {
+            
+            screen = 2;
+            
+        }
+        
+    }//boss select
+    
+    if (screen === 5) {
+        
+        background(0, 0, 0);
+        cool();
+        noFill();
+        stroke(c1,c2,c3);
+        ellipse(300,500,150,150);
+        
+        fill(c1,c2,c3);
+        text("back",300,500);
+        
+        if (mouseIsPressed && dist(mouseX,mouseY,300,500) < 75) {
+            
+            screen = 2;
+            
+        }
+        
+    }//save
+    
+};
